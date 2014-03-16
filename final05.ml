@@ -28,7 +28,7 @@ let rec ru(f, g, base) =
 
 let rec reverse l =
   let f (h::tl, r) = (tl, h::r) in
-  let g (x, r) = List.length(r) != List.length(l) in
+  let g (x, r) = List.length(r) <> List.length(l) in
   let base = (l, []) in
   let (_, r) = ru(f, g, base) in
   r

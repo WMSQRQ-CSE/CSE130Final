@@ -26,28 +26,24 @@ val x = new Vec(2,2)
 val y = new Vec(3,3)
 val ans = (x.data, y.data)
 
-case class NumEx(e: Int) extends Throwable
-var c = 0
-def f (x: Int) : Int = {
-  c += 1
-  if(x == 0) {throw NumEx(0)}
-  val r = g(x-1)
-  c -= 1
-  r
+class A {
+  def f : String = "A-" + this.g
+  def g : String = throw new Exception
 }
 
-def g(x: Int): Int = {
-  c += 1
-  if(x == 0) {throw NumEx(1)}
-  val r = f(x-1)
-  c += 1
-  r
+class B extends A {
+  override def g : String = "B"
 }
-
-def foo(x: Int) = {
-  try{ f(x) }
-  catch{case NumEx(e) => e}
+class C extends A {
+  var y = 0
 }
+def foo(x: A): Any = {
+  try{x.f}
+  catch{case _ => ()}
+}
+val ans = (foo(new B), foo(new C))
 
-val r = List(0,1,2,3,4,5,6,7,8,9).map(foo)
-val ans = (c, r)
+def streamify[A, B] (f: A => List[B], xs: List[A]) : List[B] = {
+  for (x <- xs; y <- f(x)) 
+    yield y
+}
