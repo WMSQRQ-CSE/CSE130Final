@@ -35,3 +35,14 @@ val fac: Int => Int = q(7) {(k: Int) =>
   if (k <= 1) 1 else {k * (fac(k-1))}
 }
 val ans = (fac(5), fac(5))
+
+val es = List((0,1),(1,2),(2,3),(3,0))
+def valid(es:List[(Int, Int)], c: List[Int]): Boolean = {
+  for(((n1, n2), color) <- es zip c; ((n3, n4), color1) <- es zip c){
+      if (((n1,n2),color) != ((n3,n4),color1))
+        if( (n1 == n3 || n1 == n4 || n2 == n3 || n2 == n4)){
+          if(color == color1) return false
+        }
+  }
+  true
+}
